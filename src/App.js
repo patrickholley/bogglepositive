@@ -104,7 +104,12 @@ function App() {
   return (
     <div className="app-container">
       <h1>🌠 Boggle Posit-ive! 🌠</h1>
-      <p>Either copy-paste your own {BOARD_DIMENSION}x{BOARD_DIMENSION} board, or hit the "Random Board" button for some fun!</p>
+      <p>
+        Either copy-paste your own {BOARD_DIMENSION}x{BOARD_DIMENSION} board, or
+        hit the{" "}
+        <span style={{ backgroundColor: "#e0c100" }}>&nbsp;Random&nbsp;</span>{" "}
+        button for some fun!
+      </p>
       <div className="input-container">
         <textarea
           placeholder={
@@ -120,7 +125,7 @@ function App() {
             onClick={handleRandomBoard}
             className="random-board-button button"
           >
-            🎲 Random Board 🎲
+            Random 🎲
           </button>
           <button
             disabled={!!error || !board}
@@ -129,12 +134,12 @@ function App() {
             }
             className="solve-button button"
           >
-            💡 Solve Board 💡
+            Solve 💡
           </button>
         </div>
       </div>
       <div className="solutions-container">
-        <h2>Solutions</h2>
+        <h2>Solutions ✅</h2>
         {solutions.length ? (
           <div>
             <p>Results: {solutions.length}</p>
@@ -145,7 +150,13 @@ function App() {
             </ul>
           </div>
         ) : (
-          <p>No solutions yet. Enter a board and click "Solve Board".</p>
+          <p>
+            No solutions. Enter a (different) board and click{" "}
+            <span style={{ backgroundColor: "#007bff", color: "white" }}>
+              &nbsp;Solve&nbsp;
+            </span>
+            .
+          </p>
         )}
       </div>
     </div>

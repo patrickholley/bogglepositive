@@ -4,7 +4,7 @@ import { act } from "react-dom/test-utils";
 
 const errorMessage =
   "Input must be a valid 4x4 matrix of single letters (check square brackets, no periods, etc).";
-const solveButtonText = "Solve Board";
+const solveButtonText = "Solve 💡";
 const textAreaPlaceholder =
   '[["b","q","m","p"],["t","i","g","o"],["i","j","z","l"],["o","g","k","c"]]';
 
@@ -14,11 +14,11 @@ describe("App Component", () => {
       render(<App />);
     });
 
-    expect(screen.getByText("Boggle Solver")).toBeInTheDocument();
+    expect(screen.getByText("🌠 Boggle Posit-ive! 🌠")).toBeInTheDocument();
     expect(
       screen.getByPlaceholderText(textAreaPlaceholder),
     ).toBeInTheDocument();
-    expect(screen.getByText("Solve Board")).toBeInTheDocument();
+    expect(screen.getByText(solveButtonText)).toBeInTheDocument();
   });
 
   it("enables the solve button for valid input matrix", async () => {
@@ -48,7 +48,7 @@ describe("App Component", () => {
     const textarea = screen.getByPlaceholderText(
       '[["b","q","m","p"],["t","i","g","o"],["i","j","z","l"],["o","g","k","c"]]',
     );
-    const solveButton = screen.getByText("Solve Board");
+    const solveButton = screen.getByText(solveButtonText);
 
     fireEvent.change(textarea, {
       target: { value: '[["a","b","c","INVALID"]]' },
@@ -56,5 +56,28 @@ describe("App Component", () => {
 
     expect(solveButton).toBeDisabled();
     expect(screen.getByText(errorMessage)).toBeInTheDocument();
+  });
+
+  it("populates the board with a valid random matrix when the Random button is clicked", async () => {
+    await act(async () => {
+      render(<App />);
+    });
+
+    const randomButton = screen.getByText("Random 🎲");
+    const textarea = screen.getByPlaceholderText(
+      '[["b","q","m","p"],["t","i","g","o"],["i","j","z","l"],["o","g","k","c"]]',
+    );
+
+    fireEvent.click(randomButton);
+
+    const updatedBoard = textarea.value;
+
+    const parsedBoard = JSON.parse(updatedBoard);
+
+    expect(parsedBoard.length).toBe(4);
+    expect(parsedBoard.every((row) => row.length === 4)).toBe(true);
+    expect(parsedBoard.flat().every((cell) => /^[a-z]$/.test(cell))).toBe(true);
+
+    expect(screen.queryByText(errorMessage)).not.toBeInTheDocument();
   });
 });
