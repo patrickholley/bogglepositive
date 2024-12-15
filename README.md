@@ -2,7 +2,7 @@
 
 ## Introduction
 
-bogglepositive.ardmore.us
+[bogglepositive.ardmore.us]()
 
 My attempt at creating a lightweight Boggle solver! Utilized resources provided by the assigner, a relevant LeetCode problem for efficiency-checking and JetBrains AI Assistant for basic scaffolding/unit-test writing.
 
