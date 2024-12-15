@@ -9,6 +9,7 @@ My attempt at creating a lightweight Boggle solver! Utilized resources provided 
 - [Boggle Rules](https://en.wikipedia.org/wiki/Boggle#Rules)
 - [Boggle Solver Using A Trie](https://www.geeksforgeeks.org/boggle-set-2-using-trie/?ref=lbp)
 - [Solving Boggle Using Trie](https://algotree.org/algorithms/trie/trie_dfs_boggle/)
+- [LeetCode: Word Search II](https://leetcode.com/problems/word-search-ii/description/)
 
 ## Getting Started
 
