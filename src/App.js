@@ -27,6 +27,14 @@ const createRandomBoard = () => {
   return boardValues;
 };
 
+const sanitizeInput = (input) => input
+    .replace(/'/g, '"') // Replace single quotes with double quotes for valid JSON
+    .replace(/"+/g, '"') // Remove duplicate/multiple quotes
+    .replace(/\s+/g, "") // Explicitly remove all whitespace chars
+    .replace(/(?<!["'])\b[a-zA-Z]\b(?!["'])/g, '"$&"') // Add quotes only to unquoted single letters
+    .replace(/,\s*]/g, "]") // Remove extra commas before closing brackets
+    .replace(/],\s*]/g, "]]"); // Remove extra commas for nested arrays;
+
 function App() {
   // Array of words used as the application's dictionary
   const [board, setBoard] = useState("");
@@ -48,15 +56,7 @@ function App() {
   // Validator function
   const isValidMatrix = (input) => {
     try {
-      const sanitizedInput = input
-        .replace(/'/g, '"') // Replace single quotes with double quotes for valid JSON
-        .replace(/"+/g, '"') // Remove duplicate/multiple quotes
-        .replace(/\s+/g, "") // Explicitly remove all whitespace chars
-        .replace(/(?<!["'])\b[a-zA-Z]\b(?!["'])/g, '"$&"') // Add quotes only to unquoted single letters
-        .replace(/,\s*]/g, "]") // Remove extra commas before closing brackets
-        .replace(/],\s*]/g, "]]"); // Remove extra commas for nested arrays;
-
-      const parsed = JSON.parse(sanitizedInput);
+      const parsed = JSON.parse(sanitizeInput(input));
 
       if (!Array.isArray(parsed) || parsed.length !== BOARD_DIMENSION) {
         return false;
@@ -130,7 +130,7 @@ function App() {
           <button
             disabled={!!error || !board}
             onClick={() =>
-              setSolutions(solveBoard(JSON.parse(board), dictionary))
+              setSolutions(solveBoard(JSON.parse(sanitizeInput(board)), dictionary))
             }
             className="solve-button button"
           >
